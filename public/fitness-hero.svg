@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480" role="img" aria-labelledby="title description">
+  <title id="title">FitBalance workout illustration</title>
+  <desc id="description">A person lifting a barbell beside a card showing strength, cardio, and mobility.</desc>
+  <rect width="1200" height="480" rx="28" fill="#e8f3ee"/>
+  <circle cx="170" cy="90" r="115" fill="#d2e8de"/>
+  <circle cx="510" cy="410" r="155" fill="#d2e8de"/>
+  <circle cx="1055" cy="60" r="145" fill="#d2e8de"/>
+  <rect x="758" y="82" width="340" height="316" rx="24" fill="#fff"/>
+  <text x="800" y="139" fill="#1f2933" font-family="Arial, sans-serif" font-size="29" font-weight="700">A balanced week</text>
+  <text x="800" y="202" fill="#61736b" font-family="Arial, sans-serif" font-size="21">Strength</text>
+  <rect x="920" y="181" width="135" height="24" rx="12" fill="#176b5b"/>
+  <text x="800" y="268" fill="#61736b" font-family="Arial, sans-serif" font-size="21">Cardio</text>
+  <rect x="920" y="247" width="105" height="24" rx="12" fill="#53a786"/>
+  <text x="800" y="334" fill="#61736b" font-family="Arial, sans-serif" font-size="21">Mobility</text>
+  <rect x="920" y="313" width="120" height="24" rx="12" fill="#91c5ae"/>
+  <circle cx="421" cy="140" r="39" fill="#e0a57b"/>
+  <path d="M383 136c7-49 73-58 88-10-25-10-58-10-88 10Z" fill="#29463e"/>
+  <path d="M396 188c25-17 52-17 77 0l38 104-64 29-78-63 27-70Z" fill="#176b5b"/>
+  <path d="m398 211-68 25-42-43 18-21 45 26 38-18 9 31Zm78-7 54-22 41 36-17 22-46-20-26 20-6-36Z" fill="#e0a57b"/>
+  <path d="m438 301-43 82-85 25-8-27 67-35 29-77 40 32Zm45-12 38 59 72 22-8 29-92-15-51-59 41-36Z" fill="#29463e"/>
+  <path d="M262 174h311" stroke="#1f2933" stroke-width="12" stroke-linecap="round"/>
+  <path d="M274 143v62m22-80v98m249-80v62m-22-80v98" stroke="#176b5b" stroke-width="15" stroke-linecap="round"/>
+  <path d="M226 420h420" stroke="#a9cdbb" stroke-width="8" stroke-linecap="round"/>
+</svg>
