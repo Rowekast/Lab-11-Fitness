@@ -85,6 +85,11 @@ def health():
     return jsonify({"status": "ok", "message": "FitBalance is running."})
 
 
+@app.route("/about")
+def about():
+    return render_template_string(ABOUT_PAGE)
+
+
 @app.route("/ask", methods=["POST"])
 def ask():
     workout_history = request.form.get("workout_history", "").strip()
@@ -105,69 +110,138 @@ def ask():
 # Asking BearcatGPT for help? Paste this part. Your key is in .env, not here.
 
 STYLE = """
-/* Make it yours: change these values first. */
 :root {
-  --brand: #176b5b;      /* your project's color: header, buttons, links */
-  --page: #f1f7f4;       /* the page background */
-  --text: #1f2933;       /* normal text */
-  --muted: #61736b;      /* small, less important text */
+  --brand: #176b5b;
+  --page: #f3f6f1;
+  --text: #182b28;
+  --muted: #5c706b;
+  --accent: #dce99a;
 }
 
-/* One readable column in the middle of the page */
+* { box-sizing: border-box; }
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   color: var(--text);
   background: var(--page);
-  max-width: 760px;
+  max-width: 1060px;
   margin: 0 auto;
-  padding: 0 16px 40px;
-  line-height: 1.5;
+  padding: 0 24px 48px;
+  line-height: 1.6;
 }
-
-/* A bar at the top of every page */
-.nav { display: flex; gap: 16px; padding: 12px 0; font-weight: bold; }
+.nav {
+  display: flex;
+  gap: 24px;
+  padding: 18px 0;
+  font-size: 15px;
+  font-weight: 700;
+}
 .nav a { color: var(--brand); text-decoration: none; }
-
-/* The header: the biggest thing on the page says what the app is */
+.nav a:hover { text-decoration: underline; }
 .header {
   background: var(--brand);
   color: white;
-  padding: 20px 24px;
-  border-radius: 12px;
+  padding: 28px 32px;
+  border-radius: 18px;
   margin-bottom: 24px;
 }
-.header h1 { margin: 0 0 4px; }
+.header h1 { margin: 0 0 4px; line-height: 1.2; }
 .header p { margin: 0; }
-
-/* The picture on the landing page */
-.hero { width: 100%; border-radius: 12px; margin-bottom: 24px; display: block; }
-
-/* Cards: a white box groups things that belong together */
 .card {
   background: white;
-  border-radius: 12px;
-  padding: 20px 24px;
+  border: 1px solid #e2e9e3;
+  border-radius: 16px;
+  padding: 24px 28px;
   margin-bottom: 24px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(24, 43, 40, 0.06);
 }
-.steps { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
-.step { flex: 1; min-width: 160px; background: var(--page); border-radius: 10px; padding: 12px 14px; }
-label { display: block; font-weight: bold; margin: 12px 0 6px; }
-input, textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 8px; }
+.steps { display: flex; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
+.step {
+  flex: 1;
+  min-width: 180px;
+  background: #f3f6f1;
+  border: 1px solid #e6ece4;
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+label { display: block; font-weight: 700; margin: 12px 0 6px; }
+input, textarea {
+  width: 100%;
+  border: 1px solid #bdcbc4;
+  border-radius: 8px;
+  font: inherit;
+  padding: 10px 12px;
+}
+input:focus, textarea:focus { outline: 3px solid #dce99a; border-color: var(--brand); }
 button, .button {
   display: inline-block;
   margin-top: 16px;
   background: var(--brand);
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
+  border-radius: 9px;
+  padding: 12px 20px;
   font: inherit;
-  font-weight: bold;
+  font-weight: 700;
   text-decoration: none;
 }
+button:hover, .button:hover { background: #105649; }
 .answer { font-size: 18px; white-space: pre-wrap; border-left: 6px solid var(--brand); }
 .note { color: var(--muted); font-size: 14px; }
+.landing-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.08fr;
+  align-items: center;
+  gap: 28px;
+  padding: 24px 0 32px;
+}
+.hero-copy { padding: 12px 4px; }
+.eyebrow {
+  display: inline-block;
+  color: var(--brand);
+  background: #e6edd0;
+  border-radius: 99px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.hero-copy h1 {
+  max-width: 520px;
+  margin: 16px 0;
+  font-size: clamp(38px, 5vw, 58px);
+  letter-spacing: -0.04em;
+  line-height: 1.06;
+}
+.hero-copy p { max-width: 480px; color: var(--muted); font-size: 18px; }
+.hero { width: 100%; border-radius: 18px; display: block; }
+.section-title { margin: 0; font-size: 28px; letter-spacing: -0.02em; }
+.step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 10px;
+  border-radius: 50%;
+  color: var(--brand);
+  background: var(--accent);
+  font-weight: 800;
+}
+.step h3 { margin: 0 0 4px; }
+.step p { margin: 0; color: var(--muted); }
+.about-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.about-grid .card { margin-bottom: 0; }
+@media (max-width: 720px) {
+  body { padding: 0 16px 32px; }
+  .nav { gap: 18px; flex-wrap: wrap; }
+  .landing-hero { grid-template-columns: 1fr; gap: 16px; padding-top: 12px; }
+  .hero-copy { padding: 8px 0; }
+  .header { padding: 22px 20px; }
+  .card { padding: 20px; }
+  .steps, .about-grid { display: grid; grid-template-columns: 1fr; }
+  .step { min-width: 0; }
+  button, .button { display: block; width: 100%; text-align: center; }
+}
 """
 
 # The landing page: what the app is, who it is for, and one button to start.
@@ -180,24 +254,28 @@ LANDING_PAGE = """<!doctype html>
     <style>""" + STYLE + """</style>
   </head>
   <body>
-    <nav class="nav"><a href="/">Home</a><a href="/start">Plan a workout</a></nav>
-    <header class="header">
-      <h1>FitBalance</h1>
-      <p>Share what you have been doing and get ideas for a more balanced next workout.</p>
-    </header>
-    <img class="hero" src="/fitness-hero.svg" alt="Illustration of a person strength training beside a balanced activity chart">
+    <nav class="nav"><a href="/">Home</a><a href="/start">Plan a workout</a><a href="/about">About</a></nav>
+    <main>
+      <section class="landing-hero">
+        <div class="hero-copy">
+          <span class="eyebrow">Your workout, in context</span>
+          <h1>Make your next move a balanced one.</h1>
+          <p>Log what you have been doing and get general ideas for a next workout that complements your recent activity.</p>
+          <a class="button" href="/start">Plan my next workout</a>
+        </div>
+        <img class="hero" src="/fitness-hero.svg" alt="Illustration of a person strength training beside a balanced activity chart">
+      </section>
     <div class="card">
-      <h2>Who it is for</h2>
-      <p>Anyone looking for practical workout ideas that complement their recent exercise routine.</p>
-      <h2>How it works</h2>
+      <h2 class="section-title">A simple way to think about your routine</h2>
+      <p>FitBalance is for anyone looking for practical workout ideas that complement their recent exercise. It uses the history and optional focus you provide; it does not track activity for you.</p>
       <div class="steps">
-        <div class="step"><strong>1. Log</strong><br>Describe the exercises you have done recently.</div>
-        <div class="step"><strong>2. Add a focus</strong><br>Share a goal or preference, if you have one.</div>
-        <div class="step"><strong>3. Get ideas</strong><br>See suggestions for a complementary next session.</div>
+        <div class="step"><span class="step-number">1</span><h3>Log</h3><p>Describe a few recent workouts.</p></div>
+        <div class="step"><span class="step-number">2</span><h3>Add a focus</h3><p>Share a goal or preference, if you have one.</p></div>
+        <div class="step"><span class="step-number">3</span><h3>Get ideas</h3><p>Review suggestions for a complementary next session.</p></div>
       </div>
-      <a class="button" href="/start">Start</a>
     </div>
-    <p class="note">General fitness ideas only, not medical advice. Adjust activities to your ability.</p>
+      <p class="note">General fitness ideas only, not medical advice. Adjust activities to your ability. <a href="/about">Learn about FitBalance and its limits.</a></p>
+    </main>
   </body>
 </html>"""
 
@@ -211,7 +289,7 @@ INDEX_PAGE = """<!doctype html>
     <style>""" + STYLE + """</style>
   </head>
   <body>
-    <nav class="nav"><a href="/">Home</a><a href="/start">Plan a workout</a></nav>
+    <nav class="nav"><a href="/">Home</a><a href="/start">Plan a workout</a><a href="/about">About</a></nav>
     <header class="header">
       <h1>Your Recent Exercise</h1>
       <p>Tell FitBalance what you have done lately to get ideas for a balanced next session.</p>
@@ -239,13 +317,43 @@ RESULT_PAGE = """<!doctype html>
     <style>""" + STYLE + """</style>
   </head>
   <body>
-    <nav class="nav"><a href="/">Home</a><a href="/start">Plan a workout</a></nav>
+    <nav class="nav"><a href="/">Home</a><a href="/start">Plan a workout</a><a href="/about">About</a></nav>
     <header class="header">
       <h1>Your FitBalance Suggestions</h1>
       <p><strong>Based on:</strong> {{ files|join(", ") }} &middot; <strong>Request:</strong> {{ prompt }}</p>
     </header>
     <div class="card answer">{{ answer }}</div>
     <a class="button" href="/start">Plan another workout</a>
+  </body>
+</html>"""
+
+# Information about FitBalance and its limitations.
+ABOUT_PAGE = """<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About FitBalance</title>
+    <style>""" + STYLE + """</style>
+  </head>
+  <body>
+    <nav class="nav"><a href="/">Home</a><a href="/start">Plan a workout</a><a href="/about">About</a></nav>
+    <header class="header">
+      <h1>About FitBalance</h1>
+      <p>A workout-log helper for thinking about a balanced next session.</p>
+    </header>
+    <div class="about-grid">
+      <section class="card">
+        <h2>What it does</h2>
+        <p>FitBalance uses the recent exercise history and optional goal or preference you enter to ask an AI model for general ideas that complement your activity.</p>
+      </section>
+      <section class="card">
+        <h2>What it cannot do</h2>
+        <p>It does not connect to a fitness tracker, keep a workout log, or know your health history. AI suggestions can be inaccurate and are not medical advice or a substitute for a qualified professional.</p>
+      </section>
+    </div>
+    <p class="note">Only share exercise details you are comfortable sending to the AI service. Stop if an activity causes pain.</p>
+    <a class="button" href="/start">Plan a workout</a>
   </body>
 </html>"""
 
