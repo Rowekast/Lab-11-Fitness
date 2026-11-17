@@ -274,7 +274,7 @@ LANDING_PAGE = """<!doctype html>
         <div class="step"><span class="step-number">3</span><h3>Get ideas</h3><p>Review suggestions for a complementary next session.</p></div>
       </div>
     </div>
-      <p class="note">General fitness ideas only, not medical advice. Adjust activities to your ability. <a href="/about">Learn about FitBalance and its limits.</a></p>
+      <p class="note">Do not enter real names, email addresses, phone numbers, IDs, passwords, or other private information. Your workout history and optional focus, along with FitBalance's request for a next-workout suggestion, are sent to GPT-5.4 through BearcatGPT; this app does not accept file uploads. AI suggestions can be wrong, so check them against your exercise record and your own needs. <a href="/about">Learn about FitBalance and its limits.</a></p>
     </main>
   </body>
 </html>"""
