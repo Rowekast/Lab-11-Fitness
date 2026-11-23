@@ -18,10 +18,13 @@ instructions = (
     "You are FitBalance, a general fitness-planning assistant. Use the recent exercise history and goal "
     "provided by the user to suggest practical activities that complement what they have already done. "
     "Consider strength, cardio, mobility or flexibility, and recovery as relevant; point out what may be "
-    "underrepresented and suggest a simple next session. Keep suggestions adjustable to the user's ability "
-    "and avoid assuming their health status. Do not diagnose or treat medical conditions. If the history is "
-    "too vague to make a useful suggestion, ask for more detail. Remind the user to stop if they feel pain "
-    "and consult a qualified professional for medical concerns."
+    "underrepresented. Keep the response concise and organize a useful suggestion as: why it complements "
+    "their recent activity, a practical session with a warm-up, main activity, and cool-down, and one easier "
+    "adjustment or recovery reminder. Adapt to any stated time, equipment, or preference without inventing "
+    "details or assuming the user's health status. If the history is too vague to make a useful suggestion, "
+    "ask one specific follow-up question instead. Keep suggestions adjustable, do not diagnose or treat "
+    "medical conditions, and remind the user to stop if they feel pain and consult a qualified professional "
+    "for medical concerns."
 )
 
 
@@ -111,18 +114,18 @@ def ask():
 
 STYLE = """
 :root {
-  --brand: #176b5b;
-  --page: #f3f6f1;
-  --text: #182b28;
-  --muted: #5c706b;
-  --accent: #dce99a;
+  --brand: #155e63;
+  --page: #f0f7f6;
+  --text: #142d32;
+  --muted: #526b70;
+  --accent: #f2c66d;
 }
 
 * { box-sizing: border-box; }
 body {
   font-family: "Segoe UI", Arial, sans-serif;
   color: var(--text);
-  background: var(--page);
+  background: linear-gradient(180deg, #eaf5f3 0%, var(--page) 48%);
   max-width: 1060px;
   margin: 0 auto;
   padding: 0 24px 48px;
@@ -130,61 +133,71 @@ body {
 }
 .nav {
   display: flex;
-  gap: 24px;
+  gap: 8px;
   padding: 18px 0;
   font-size: 15px;
   font-weight: 700;
 }
-.nav a { color: var(--brand); text-decoration: none; }
-.nav a:hover { text-decoration: underline; }
+.nav a {
+  color: var(--brand);
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 7px 13px;
+}
+.nav a:hover { background: #dcebe8; }
 .header {
-  background: var(--brand);
+  background: linear-gradient(125deg, #123f4b, var(--brand));
   color: white;
   padding: 28px 32px;
-  border-radius: 18px;
+  border-radius: 22px;
   margin-bottom: 24px;
+  box-shadow: 0 12px 28px rgba(20, 66, 74, 0.16);
 }
 .header h1 { margin: 0 0 4px; line-height: 1.2; }
 .header p { margin: 0; }
 .card {
   background: white;
-  border: 1px solid #e2e9e3;
-  border-radius: 16px;
+  border: 1px solid #dce9e7;
+  border-radius: 20px;
   padding: 24px 28px;
   margin-bottom: 24px;
-  box-shadow: 0 8px 24px rgba(24, 43, 40, 0.06);
+  box-shadow: 0 12px 30px rgba(20, 55, 60, 0.07);
 }
 .steps { display: flex; gap: 16px; flex-wrap: wrap; margin: 20px 0; }
 .step {
   flex: 1;
   min-width: 180px;
-  background: #f3f6f1;
-  border: 1px solid #e6ece4;
-  border-radius: 12px;
+  background: #f4f9f7;
+  border: 1px solid #e0ece9;
+  border-radius: 15px;
   padding: 16px 18px;
 }
 label { display: block; font-weight: 700; margin: 12px 0 6px; }
 input, textarea {
   width: 100%;
-  border: 1px solid #bdcbc4;
-  border-radius: 8px;
+  border: 1px solid #b8cdca;
+  border-radius: 10px;
   font: inherit;
   padding: 10px 12px;
 }
-input:focus, textarea:focus { outline: 3px solid #dce99a; border-color: var(--brand); }
+textarea { resize: vertical; }
+input:focus, textarea:focus { outline: 3px solid #f2c66d; border-color: var(--brand); }
 button, .button {
   display: inline-block;
   margin-top: 16px;
   background: var(--brand);
   color: white;
   border: none;
-  border-radius: 9px;
+  border-radius: 999px;
   padding: 12px 20px;
   font: inherit;
   font-weight: 700;
   text-decoration: none;
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
 }
-button:hover, .button:hover { background: #105649; }
+button:hover, .button:hover { background: #104a50; transform: translateY(-1px); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .answer { font-size: 18px; white-space: pre-wrap; border-left: 6px solid var(--brand); }
 .note { color: var(--muted); font-size: 14px; }
 .landing-hero {
@@ -198,7 +211,7 @@ button:hover, .button:hover { background: #105649; }
 .eyebrow {
   display: inline-block;
   color: var(--brand);
-  background: #e6edd0;
+  background: #deeee9;
   border-radius: 99px;
   padding: 5px 12px;
   font-size: 13px;
@@ -223,7 +236,7 @@ button:hover, .button:hover { background: #105649; }
   height: 32px;
   margin-bottom: 10px;
   border-radius: 50%;
-  color: var(--brand);
+  color: #233e3c;
   background: var(--accent);
   font-weight: 800;
 }
